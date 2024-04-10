@@ -1,7 +1,9 @@
 import { IUser } from '@/models';
 import User, { PaginateOptions } from '@/models/user.model';
+import { userValidation } from '@/validations';
 import httpStatus from 'http-status';
 import { FilterQuery, QueryOptions } from 'mongoose';
+import { z } from 'zod';
 
 const createUser = async (userBody: IUser) => {
   if (await User.isEmailTaken(userBody.email)) {
@@ -23,7 +25,7 @@ const getUserByEmail = async (email: string) => {
   return User.findOne({ email });
 };
 
-const updateUserById = async (userId: string, updateBody: {} extends IUser) => {
+const updateUserById = async (userId: string, updateBody: z.infer<typeof userValidation.updateUserBody>) => {
   const user = await getUserById(userId);
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');

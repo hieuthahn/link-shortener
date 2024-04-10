@@ -5,6 +5,11 @@ import mongoSanitize from 'express-mongo-sanitize';
 import compression from 'compression';
 import cors from 'cors';
 import httpStatus from 'http-status';
+import passport from 'passport';
+import config from './config/config';
+import authLimiter from './middlewares/rateLimiter';
+import routes from '@/routes/v1';
+import { errorConverter, errorHandler } from './middlewares/error';
 
 const app = express();
 
@@ -50,4 +55,4 @@ app.use(errorConverter);
 // handle error
 app.use(errorHandler);
 
-export { app };
+export default app;
