@@ -1,3 +1,4 @@
+import ApiError from '@/utils/ApiError';
 import { NextFunction, Request } from 'express';
 import httpStatus from 'http-status';
 import passport from 'passport';

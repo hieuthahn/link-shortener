@@ -6,6 +6,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import jwt from 'jsonwebtoken';
 import { userService } from '.';
 import httpStatus from 'http-status';
+import ApiError from '@/utils/ApiError';
 
 const generateToken = (userId: string, expires: Dayjs, type: tokenTypes, secret: string = config.jwt.secret) => {
   const payload = {

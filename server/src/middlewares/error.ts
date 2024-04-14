@@ -1,4 +1,5 @@
 import config from '@/config/config';
+import ApiError from '@/utils/ApiError';
 import { NextFunction, Request, Response } from 'express';
 import httpStatus from 'http-status';
 import mongoose from 'mongoose';

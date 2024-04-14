@@ -1,4 +1,5 @@
 import { userService } from '@/services';
+import ApiError from '@/utils/ApiError';
 import catchAsync from '@/utils/catchAsync';
 import pick from '@/utils/pick';
 import { Request, Response } from 'express';

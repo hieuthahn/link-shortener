@@ -9,45 +9,37 @@ dotenv.config({
 
 const envVarsSchema = z.object({
   NODE_ENV: z.enum(['production', 'development', 'test']),
-  PORT: z.number().or(z.string()).default(3000),
+  PORT: z.coerce.number().default(3000),
   MONGODB_URL: z.string({
     description: 'Mongo DB url',
   }),
   JWT_SECRET: z.string({
     description: 'JWT secret key',
   }),
-  JWT_ACCESS_EXPIRATION_MINUTES: z
+  JWT_ACCESS_EXPIRATION_MINUTES: z.coerce.number({
+    description: 'minutes after which access tokens expire',
+  }),
+  JWT_REFRESH_EXPIRATION_DAYS: z.coerce
     .number({
       description: 'minutes after which access tokens expire',
     })
-    .or(z.string())
     .default(30),
-  JWT_REFRESH_EXPIRATION_DAYS: z
-    .number({
-      description: 'minutes after which access tokens expire',
-    })
-    .or(z.string())
-    .default(30),
-  JWT_RESET_PASSWORD_EXPIRATION_MINUTES: z
+  JWT_RESET_PASSWORD_EXPIRATION_MINUTES: z.coerce
     .number({
       description: 'minutes after which reset password token expires',
     })
-    .or(z.string())
     .default(10),
-  JWT_VERIFY_EMAIL_EXPIRATION_MINUTES: z
+  JWT_VERIFY_EMAIL_EXPIRATION_MINUTES: z.coerce
     .number({
       description: 'minutes after which verify email token expires',
     })
-    .or(z.string())
     .default(10),
   SMTP_HOST: z.string({
     description: 'server that will send the emails',
   }),
-  SMTP_PORT: z
-    .number({
-      description: 'port to connect to the email server',
-    })
-    .or(z.string()),
+  SMTP_PORT: z.coerce.number({
+    description: 'port to connect to the email server',
+  }),
   SMTP_USERNAME: z.string({
     description: 'username for email server',
   }),

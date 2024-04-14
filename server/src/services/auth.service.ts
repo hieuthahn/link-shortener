@@ -2,6 +2,7 @@ import httpStatus from 'http-status';
 import { tokenService, userService } from '.';
 import Token from '@/models/token.model';
 import { tokenTypes } from '@/config/token';
+import ApiError from '@/utils/ApiError';
 
 const loginUserWithEmailAndPassword = async (email: string, password: string) => {
   const user = await userService.getUserByEmail(email);

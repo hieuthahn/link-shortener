@@ -1,5 +1,6 @@
 import { IUser } from '@/models';
 import User, { PaginateOptions } from '@/models/user.model';
+import ApiError from '@/utils/ApiError';
 import { userValidation } from '@/validations';
 import httpStatus from 'http-status';
 import { FilterQuery, QueryOptions } from 'mongoose';
