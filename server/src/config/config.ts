@@ -55,6 +55,12 @@ const envVarsSchema = z.object({
   VERIFY_EMAIL_URL: z.string({
     description: 'url that will be used to verify email',
   }),
+  DEFAULT_LINK_SHORTEN_EXPIRATION_IN_DAYS: z.coerce.number({
+    description: 'default link expiration in days',
+  }),
+  SHORT_CODE_LENGTH: z.coerce.number({
+    description: 'length of short code',
+  }),
 });
 
 const envVars = envVarsSchema.parse(process.env);
@@ -87,6 +93,20 @@ const config = {
   auth: {
     resetPasswordUrl: envVars.RESET_PASSWORD_URL,
     verifyEmailUrl: envVars.VERIFY_EMAIL_URL,
+  },
+  link: {
+    defaultExpirationDays: envVars.DEFAULT_LINK_SHORTEN_EXPIRATION_IN_DAYS,
+    shortCodeLength: envVars.SHORT_CODE_LENGTH,
+  },
+  ipGeoApiKey: {
+    ipify: process.env.ipify_API_KEY,
+    ipgeolocation: process.env.ipgeolocation_API_KEY,
+    ipinfo: process.env.ipinfo_API_KEY,
+    ipgeolocation_abstractapi: process.env.ipgeolocation_abstractapi_API_KEY,
+    ip2location: process.env.ip2location_API_KEY,
+    geoapify: process.env.geoapify_API_KEY,
+    findip: process.env.findip_API_Key,
+    api_bdc: process.env.api_bdc_API_KEY,
   },
 };
 
