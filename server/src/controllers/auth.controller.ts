@@ -1,5 +1,6 @@
 import { IUser } from '@/models';
 import { authService, emailService, tokenService, userService } from '@/services';
+import ApiError from '@/utils/ApiError';
 import catchAsync from '@/utils/catchAsync';
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
@@ -39,9 +40,15 @@ const resetPassword = catchAsync(async (req: Request, res: Response) => {
 });
 
 const sendVerificationEmail = catchAsync(async (req: Request, res: Response) => {
-  const verifyEmailToken = await tokenService.generateVerifyEmailToken(req?.user);
-  await emailService.sendVerifyEmail(req.user.email, verifyEmailToken);
-  res.status(httpStatus.NO_CONTENT).send();
+  if (req.user) {
+    if (req.user.isEmailVerified) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Email already verified');
+    }
+    const verifyEmailToken = await tokenService.generateVerifyEmailToken(req.user);
+    await emailService.sendVerifyEmail(req.user.email, verifyEmailToken);
+    res.status(httpStatus.NO_CONTENT).send();
+  }
+  throw new ApiError(httpStatus.UNAUTHORIZED, 'Please authenticate');
 });
 
 const verifyEmail = catchAsync(async (req: Request, res: Response) => {

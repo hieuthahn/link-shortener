@@ -15,6 +15,8 @@ interface IClick extends Document {
     utmSource?: string;
     utmMedium?: string;
     utmCampaign?: string;
+    utmContent?: string;
+    utmTerm?: string;
   };
 }
 
@@ -36,9 +38,11 @@ const clickSchema = new mongoose.Schema<IClick>({
     city: { type: String },
   },
   utmParams: {
-    utmSource: { type: String },
-    utmMedium: { type: String },
-    utmCampaign: { type: String },
+    utmSource: { type: String, default: '' },
+    utmMedium: { type: String, default: '' },
+    utmCampaign: { type: String, default: '' },
+    utmContent: { type: String, default: '' },
+    utmTerm: { type: String, default: '' },
   },
 });
 

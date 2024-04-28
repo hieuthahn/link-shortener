@@ -1,4 +1,4 @@
-import { tokenTypes } from '@/config/token';
+import { TokenType } from '@/config/token';
 import mongoose from 'mongoose';
 import { toJSON } from './plugin';
 import { IUser } from './user.model';
@@ -25,7 +25,7 @@ const tokenSchema = new mongoose.Schema<IToken>(
     },
     type: {
       type: String,
-      enum: [tokenTypes.ACCESS, tokenTypes.RESET_PASSWORD, tokenTypes.VERIFY_EMAIL],
+      enum: TokenType,
     },
     expires: {
       type: Date,

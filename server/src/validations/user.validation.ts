@@ -5,7 +5,9 @@ const createUser = z.object({
   body: z.object({
     email: z.string().email(),
     password: z.string(),
-    name: z.string(),
+    username: z.string().optional(),
+    fullName: z.string().optional(),
+    phoneNumber: z.string().optional(),
   }),
 });
 

@@ -13,7 +13,7 @@ const validate = (schema: z.ZodObject<any, any>) => {
     } catch (error) {
       if (error instanceof ZodError) {
         const errorMessages = error.errors.map((issue: any) => ({
-          message: `${issue.path.join('.')} is ${issue.message}`,
+          message: `${issue.path.join('.')} is ${issue.message.toLowerCase()}`,
         }));
         res.status(httpStatus.BAD_REQUEST).json({ error: 'Invalid data', details: errorMessages });
       } else {

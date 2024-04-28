@@ -7,10 +7,11 @@ import paginate from './plugin/paginate.plugin';
 
 // Document interface
 export interface IUser extends Document {
-  fullName: string;
+  username?: string;
+  fullName?: string;
   email: string;
-  imageUrl: string;
-  phoneNumber: string;
+  imageUrl?: string;
+  phoneNumber?: string;
   password: string;
   passwordEnabled: boolean;
   externalAccounts: Types.DocumentArray<ExternalAccount>;
@@ -53,9 +54,16 @@ interface UserModel extends Model<IUser, {}, IUserMethods> {
 
 const userSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>(
   {
+    username: {
+      type: String,
+      trim: true,
+      index: true,
+      square: true,
+      unique: true,
+      default: null,
+    },
     fullName: {
       type: String,
-      required: true,
       trim: true,
     },
     email: {
@@ -74,10 +82,14 @@ const userSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>(
       type: String,
       unique: true,
       trim: true,
+      index: true,
+      square: true,
+      default: null,
     },
     imageUrl: {
       type: String,
       trim: true,
+      default: null,
     },
     password: {
       type: String,
@@ -136,6 +148,12 @@ userSchema.pre('save', async function (next) {
   if (user.isModified('password')) {
     user.password = await bcrypt.hash(user.password, 6);
   }
+  user.passwordEnabled = user.password.length > 0 ? true : false;
+  user.fullName =
+    user.username ||
+    user.email ||
+    user.phoneNumber ||
+    user.externalAccounts.map((account) => account.firstName + ' ' + account.lastName).join(' ');
   next();
 });
 

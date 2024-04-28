@@ -1,7 +1,16 @@
+import { IUser } from '@/models';
 import ApiError from '@/utils/ApiError';
 import { NextFunction, Request } from 'express';
 import httpStatus from 'http-status';
 import passport from 'passport';
+
+declare global {
+  namespace Express {
+    interface User extends IUser {
+      email: string;
+    }
+  }
+}
 
 const verifyCallback =
   (req: Request, resolve: (any?: any) => void, reject: (any?: any) => void, requiredRights: any[]) =>
